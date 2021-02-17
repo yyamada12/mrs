@@ -1,4 +1,4 @@
-package mrs.mrs;
+package mrs;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
