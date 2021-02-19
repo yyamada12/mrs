@@ -1,11 +1,12 @@
 package mrs.domain.model;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
 @Embeddable
-public class ReservableRoomId {
+public class ReservableRoomId implements Serializable {
     private Integer roomId;
 
     private LocalDate reservedDate;
