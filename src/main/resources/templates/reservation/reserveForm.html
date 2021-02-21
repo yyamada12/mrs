@@ -10,7 +10,10 @@
     <a th:href="@{'/rooms/' + ${date}}">会議室一覧へ</a>
 </div>
 
-<form method="post" th:action="@{'/reservations/' + ${date} + ${roomId}}" th:object="${reservationForm}">
+
+<p style="color: red" th:if="${error != null}" th:text="${error}"></p>
+
+<form method="post" th:action="@{'/reservations/' + ${date} + '/' +  ${roomId}}" th:object="${reservationForm}">
     会議室: <span th:text="${room.roomName}">豊洲</span>
     <br/>
     予約社名: <span th:text="${user.lastName + ' ' + user.firstName}">山田 太郎</span>
@@ -38,13 +41,13 @@
     </tr>
     <tr th:each="reservation : ${reservations}">
         <td>
-            <span th:text="$reservation.startTime"/>
+            <span th:text="${reservation.startTime}"/>
             -
-            <span th:text="$reservation.endTime"/>
+            <span th:text="${reservation.endTime}"/>
         </td>
         <td>
-            <span th:text="$reservation.user.lastName"/>
-            <span th:text="$reservation.user.firstName"/>
+            <span th:text="${reservation.user.lastName}"/>
+            <span th:text="${reservation.user.firstName}"/>
         </td>
         <td>
             <form method="post" th:action="@{'/reservations/' + ${date} + '/' + ${roomId}}"
