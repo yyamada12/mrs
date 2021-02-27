@@ -3,7 +3,6 @@ package mrs.app.reservation;
 import mrs.domain.model.ReservableRoom;
 import mrs.domain.model.ReservableRoomId;
 import mrs.domain.model.Reservation;
-import mrs.domain.model.User;
 import mrs.domain.service.reservation.AlreadyReservedException;
 import mrs.domain.service.reservation.ReservationService;
 import mrs.domain.service.reservation.UnavailableReservationException;
@@ -17,7 +16,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -87,14 +90,13 @@ public class ReservationController {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "cancel")
-    String cancel(@AuthenticationPrincipal ReservationUserDetails userDetails,
-                  @RequestParam("reservationId") Integer reservationId,
+    String cancel(@RequestParam("reservationId") Integer reservationId,
                   @PathVariable("roomId") Integer roomId,
                   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @PathVariable("date") LocalDate date,
                   Model model) {
-        User user = userDetails.getUser();
         try {
-            reservationService.cancel(reservationId, user);
+            Reservation reservation = reservationService.findOne(reservationId);
+            reservationService.cancel(reservation);
         } catch (AccessDeniedException e) {
             model.addAttribute("error", e.getMessage());
             return reserveForm(date, roomId, model);
