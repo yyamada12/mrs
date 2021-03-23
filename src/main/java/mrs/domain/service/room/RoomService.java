@@ -28,4 +28,9 @@ public class RoomService {
         return meetingRoomRepository.findById(roomId).orElse(null);
     }
 
+    public MeetingRoom register(MeetingRoom room) {
+        meetingRoomRepository.save(room);
+        return room;
+    }
+
 }
