@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,6 +64,29 @@ public class RoomsController {
         MeetingRoom room = new MeetingRoom();
         room.setRoomName(form.getRoomName());
         roomService.register(room);
+        return "redirect:/rooms/meeting/list";
+    }
+
+    @RequestMapping(path = "reservable/{roomId}/register", method = RequestMethod.GET)
+    String reservableRoomForm(Model model, @PathVariable("roomId") Integer roomId) {
+        MeetingRoom room = roomService.findMeetingRoom(roomId);
+        model.addAttribute(new ReservableRoomForm());
+        model.addAttribute("room", room);
+        return "room/reservableRoomForm";
+    }
+
+    @RequestMapping(path = "reservable/{roomId}/register", method = RequestMethod.POST)
+    String registerReservableRoom(@Validated ReservableRoomForm form,
+                                  BindingResult bindingResult,
+                                  @PathVariable("roomId") Integer roomId,
+                                  Model model) {
+        if (bindingResult.hasErrors()) {
+            for (ObjectError err : bindingResult.getAllErrors()) {
+                System.out.println(err);
+            }
+            return reservableRoomForm(model, roomId);
+        }
+        roomService.registerReservableRooms(roomId, form.getStartDate(), form.getEndDate());
         return "redirect:/rooms/meeting/list";
     }
 }

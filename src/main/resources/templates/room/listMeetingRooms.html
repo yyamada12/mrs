@@ -2,12 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>会議室一覧</title>
+    <title>会議室管理</title>
 </head>
 <body>
+<div>
+    <a th:href="@{'/rooms/list/'}">会議室一覧へ</a>
+</div>
 <ul>
     <li th:each="room: ${rooms}">
-        <span th:text="${room.roomName}"></span>
+        <a th:href="@{'/rooms/reservable/' + ${room.roomId} + '/register'}">
+            <span th:text="${room.roomName}"></span>
+        </a>
     </li>
 </ul>
 <a th:href="@{'/rooms/meeting/register'}">会議室を追加</a>

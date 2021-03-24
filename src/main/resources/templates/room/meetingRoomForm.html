@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <title>会議室の登録</title>
 </head>
-<body th:with="user=${#authentication.principal.user}">
+<body>
 
 <div>
-    <a th:href="@{'/rooms/list/' + ${date}}">会議室一覧へ</a>
+    <a th:href="@{'/rooms/meeting/list/'}">管理画面TOPへ</a>
 </div>
 
 

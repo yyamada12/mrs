@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="|${room.roomName}の予約可能日設定|">豊洲の予約可能日設定</title>
+</head>
+<body>
+
+<div>
+    <a th:href="@{'/rooms/meeting/list/'}">管理画面TOPへ</a>
+</div>
+
+
+<p style="color: red" th:if="${error != null}" th:text="${error}"></p>
+
+<form method="post" th:action="@{'/rooms/reservable/' + ${roomId} + '/register'}" th:object="${reservableRoomForm}">
+    予約可能期間:
+    <input th:field="*{startDate}" th:value="${startDate}" type="date">
+    <span style="color:red" th:errors="*{startDate}" th:if="${#fields.hasErrors('startDate')}">error!</span>
+
+    ~
+
+    <input th:field="*{endDate}" th:value="${endDate}" type="date">
+    <span style="color:red" th:errors="*{endDate}" th:if="${#fields.hasErrors('endDate')}">error!</span>
+    <br/>
+    <button>追加</button>
+</form>
+
+</body>
+</html>
