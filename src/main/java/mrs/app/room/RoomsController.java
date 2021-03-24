@@ -39,6 +39,12 @@ public class RoomsController {
         return "room/listRooms";
     }
 
+    @RequestMapping(path = "meeting/list", method = RequestMethod.GET)
+    String listMeetingRooms(Model model) {
+        List<MeetingRoom> rooms = roomService.findAllMeetingRoom();
+        model.addAttribute("rooms", rooms);
+        return "room/listMeetingRooms";
+    }
 
     @RequestMapping(path = "meeting/register", method = RequestMethod.GET)
     String meetingRoomForm(Model model) {
@@ -57,6 +63,6 @@ public class RoomsController {
         MeetingRoom room = new MeetingRoom();
         room.setRoomName(form.getRoomName());
         roomService.register(room);
-        return "redirect:/rooms/list";
+        return "redirect:/rooms/meeting/list";
     }
 }

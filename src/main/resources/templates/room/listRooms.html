@@ -6,9 +6,9 @@
 </head>
 <body>
 <h3>会議室</h3>
-<a th:href="@{'/rooms/' + ${date.minusDays(1)}}">&lt; 前日</a>
+<a th:href="@{'/rooms/list/' + ${date.minusDays(1)}}">&lt; 前日</a>
 <span th:text="|${#temporals.format(date, 'yyyy/M/d')}の会議室|">2021/1/1の会議室</span>
-<a th:href="@{'/rooms/' + ${date.plusDays(1)}}">翌日 &gt;</a>
+<a th:href="@{'/rooms/list/' + ${date.plusDays(1)}}">翌日 &gt;</a>
 
 <ul>
     <li th:each="room: ${rooms}">
@@ -16,6 +16,7 @@
            th:text="${room.meetingRoom.roomName}"></a>
     </li>
 </ul>
+<a th:href="@{'/rooms/meeting/list'}">会議室の管理</a>
 <form method="post" th:action="@{/logout}">
     <button>ログアウト</button>
 </form>

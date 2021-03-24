@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>会議室一覧</title>
+</head>
+<body>
+<ul>
+    <li th:each="room: ${rooms}">
+        <span th:text="${room.roomName}"></span>
+    </li>
+</ul>
+<a th:href="@{'/rooms/meeting/register'}">会議室を追加</a>
+<form method="post" th:action="@{/logout}">
+    <button>ログアウト</button>
+</form>
+</body>
+</html>
