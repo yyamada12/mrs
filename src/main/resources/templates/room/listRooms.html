@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title th:text="|${#temporals.format(date, 'yyyy/M/d')}の会議室|">2021/1/1の会議室</title>
@@ -16,7 +18,7 @@
            th:text="${room.meetingRoom.roomName}"></a>
     </li>
 </ul>
-<a th:href="@{'/rooms/meeting/list'}">会議室の管理</a>
+<a sec:authorize-url="/rooms/meeting/list" th:href="@{'/rooms/meeting/list'}">会議室の管理</a>
 <form method="post" th:action="@{/logout}">
     <button>ログアウト</button>
 </form>
